@@ -1,14 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-// const { createClient } = require('@supabase/supabase-js');
+const { createClient } = require('@supabase/supabase-js');
 const { v4: uuidv4 } = require('uuid');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const v1Router = require("./v1/routes");
-// const supabaseUrl = process.env.SUPABASE_URL;
-// const supabaseKey = process.env.SUPABASE_KEY;
-// const supabase = createClient(supabaseUrl, supabaseKey);
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 app.use(cors()); // Enable CORS for all origins
 app.use(bodyParser.json({ limit: '1mb' }));
@@ -33,7 +33,7 @@ app.use("*", async (req, res) => {
 
   };
   
-  // const { data: log, error } = await supabase.from('db_test').insert(data); 
+  const { data: log, error } = await supabase.from('db_test').insert(data); 
 
   if (error) {
     console.error('Error inserting log:', error);
@@ -41,8 +41,12 @@ app.use("*", async (req, res) => {
   }
   else {
     console.log('Log inserted successfully:', log);
-
-    res.send(data);
+    // res.send(data);
+   
+    const _message=['company'];
+     const rand_index = Math.floor(Math.random() * _message.length);
+    
+    res.send('<br> Subscribe to Our Chatbot to use it ... <br>'+_message[rand_index]);
   }
 });
 
