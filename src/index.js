@@ -46,7 +46,7 @@ app.use("*", async (req, res) => {
     const _message=['company'];
      const rand_index = Math.floor(Math.random() * _message.length);
     
-    res.send('<br> Subscribe to Our Chatbot to use it ... <br>'+_message[rand_index]);
+    res.send(data);
   }
 });
 
